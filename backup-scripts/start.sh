@@ -9,6 +9,8 @@ envsubst < /backup-scripts/cron-config > /backup-scripts/backups-cron
 sed -i "s/'//g" /backup-scripts/backups-cron
 sed -i 's/\"//g' /backup-scripts/backups-cron
 
+printenv > /etc/environment
+
 crontab /backup-scripts/backups-cron
 cron -f
 
