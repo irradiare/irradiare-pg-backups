@@ -1,0 +1,23 @@
+services:
+
+  dbbackups-test:
+    image: irradiare-pg-backups:16-bookworm
+    restart: unless-stopped
+    environment:
+      - CRON_SCHEDULE="45 3 * * *"
+      - DEST_FOLDER="/pg_backups"
+      - PGPASSWORD="docker"
+      - PGPORT=5432
+      - PGUSER="docker"
+      - PGHOST="db-service"
+      - CUR_HOSTNAME="my_hostname"
+      - AWS_BUCKET="my_aws_bucket_name"
+      - AWS_ACCESS_KEY_ID="my_aws_access_key_id"
+      - AWS_SECRET_ACCESS_KEY="my_aws_secret_access_key"
+      - AWS_REGION="us-east-1"
+    volumes:
+      - ./pg_backups:/pg_backups
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
